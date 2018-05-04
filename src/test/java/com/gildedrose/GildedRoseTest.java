@@ -10,25 +10,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class GildedRoseTest {
 
-    @Test
-    void outputIsIdenticalToGoldenMaster() throws FileNotFoundException {
-        final PrintStream standardOut = System.out;
-        final PrintStream run = new PrintStream("tmp/run.out");
+  @Test
+  void outputIsIdenticalToGoldenMaster() throws FileNotFoundException {
+    final PrintStream standardOut = System.out;
+    final String currentOutputFilePath = "tmp/run.out";
+    final PrintStream run = new PrintStream(currentOutputFilePath);
+    final File currentRunOutput = new File(currentOutputFilePath);
+    final File goldenMasterOutput = new File("var/goldenMaster.out");
 
-        System.setOut(run);
+    System.setOut(run);
 
-        TexttestFixture.main(new String[]{Integer.toString(10)});
+    TexttestFixture.main(new String[]{Integer.toString(10)});
 
-        System.setOut(standardOut);
+    System.setOut(standardOut);
 
-        assertThat(new File("tmp/run.out")).hasSameContentAs(new File("var/goldenMaster.out"));
-    }
-
-    @Test
-    void failureTest() {
-        Item[] items = new Item[]{new Item("foo", 0, 0)};
-        GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        assertThat(app.items[0].name).isEqualTo("fixme");
-    }
+    assertThat(currentRunOutput).hasSameContentAs(goldenMasterOutput);
+  }
 }
