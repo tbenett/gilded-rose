@@ -11,12 +11,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GildedRoseTest {
 
   @Test
-  void outputIsIdenticalToGoldenMaster() throws FileNotFoundException {
+  void currentRunIsIdenticalToGoldenMaster() throws FileNotFoundException {
     final PrintStream standardOut = System.out;
-    final String currentOutputFilePath = "tmp/run.out";
-    final PrintStream run = new PrintStream(currentOutputFilePath);
-    final File currentRunOutput = new File(currentOutputFilePath);
-    final File goldenMasterOutput = new File("var/goldenMaster.out");
+    final String currentRunFilePath = "tmp/run.out";
+    final PrintStream run = new PrintStream(currentRunFilePath);
+    final File currentRun = new File(currentRunFilePath);
+    final File goldenMaster = new File("var/goldenMaster.out");
 
     System.setOut(run);
 
@@ -24,6 +24,6 @@ class GildedRoseTest {
 
     System.setOut(standardOut);
 
-    assertThat(currentRunOutput).hasSameContentAs(goldenMasterOutput);
+    assertThat(currentRun).hasSameContentAs(goldenMaster);
   }
 }
