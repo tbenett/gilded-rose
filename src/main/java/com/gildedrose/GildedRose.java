@@ -59,18 +59,12 @@ class GildedRose {
   }
 
   private void updateQualityOfASellInDatePassedItem(Item item) {
-    if (isAgedBrie(item)) {
-      if (item.quality < MAX_QUALITY) {
-        item.quality += 1;
-      }
-    } else {
-      if (isBackstagePass(item)) {
-        item.quality = 0;
-      } else {
-        if (item.quality > 0 && !isSulfuras(item)) {
-          item.quality -= 1;
-        }
-      }
+    if (isAgedBrie(item) && item.quality < MAX_QUALITY) {
+      item.quality += 1;
+    } else if (isBackstagePass(item)) {
+      item.quality = 0;
+    } else if (item.quality > 0 && !isSulfuras(item)) {
+      item.quality -= 1;
     }
   }
 
