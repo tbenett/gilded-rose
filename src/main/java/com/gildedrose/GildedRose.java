@@ -1,6 +1,7 @@
 package com.gildedrose;
 
 import java.util.Arrays;
+import java.util.function.Function;
 
 class GildedRose {
   private static final int MAX_QUALITY = 50;
@@ -17,8 +18,10 @@ class GildedRose {
   }
 
   private void updateQuality(Item item) {
+    Function<Integer, Integer> nullifyIfNegative = value -> value < 0 ? 0 : value;
+
     if (isCommon(item)) {
-      updateCommonItemQuality(item);
+      item.quality = nullifyIfNegative.apply(decreaseQuality(item.quality));
     } else {
       updateUncommonItemQuality(item);
     }
@@ -30,10 +33,8 @@ class GildedRose {
     }
   }
 
-  private void updateCommonItemQuality(Item item) {
-    if (item.quality > 0) {
-      item.quality -= 1;
-    }
+  private int decreaseQuality(int itemQuality) {
+    return itemQuality - 1;
   }
 
   private void updateUncommonItemQuality(Item item) {
