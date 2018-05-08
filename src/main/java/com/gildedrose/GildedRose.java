@@ -23,7 +23,7 @@ class GildedRose {
     if (isCommon(item)) {
       item.quality = nullifyIfNegative.apply(decreaseQuality(item.quality));
     } else {
-      updateUncommonItemQuality(item);
+      increaseQuality(item);
     }
 
     decreaseSellInDate(item);
@@ -37,17 +37,17 @@ class GildedRose {
     return itemQuality - 1;
   }
 
-  private void updateUncommonItemQuality(Item item) {
+  private void increaseQuality(Item item) {
     if (item.quality < MAX_QUALITY) {
       if (isBackstagePass(item)) {
-        updateBackstagePassQuality(item);
+        increaseBackStagePassQuality(item);
       } else {
         item.quality += 1;
       }
     }
   }
 
-  private void updateBackstagePassQuality(Item item) {
+  private void increaseBackStagePassQuality(Item item) {
     item.quality += 1;
 
     if (item.sellIn < 11 && item.quality < MAX_QUALITY) {
