@@ -26,7 +26,9 @@ class GildedRose {
       increaseQuality(item);
     }
 
-    decreaseSellInDate(item);
+    if (!isSulfuras(item)) {
+      item.sellIn = decreaseSellInDate(item.sellIn);
+    }
 
     if (isSellInDatePassed(item)) {
       updateQualityOfASellInDatePassedItem(item);
@@ -59,10 +61,8 @@ class GildedRose {
     }
   }
 
-  private void decreaseSellInDate(Item item) {
-    if (!isSulfuras(item)) {
-      item.sellIn -= 1;
-    }
+  private int decreaseSellInDate(int itemSellIn) {
+    return itemSellIn - 1;
   }
 
   private void updateQualityOfASellInDatePassedItem(Item item) {
