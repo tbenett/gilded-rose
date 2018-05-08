@@ -18,9 +18,9 @@ class GildedRose {
 
   private void updateQuality(Item item) {
     if (isCommon(item)) {
-      decreaseCommonItemQuality(item);
+      updateCommonItemQuality(item);
     } else {
-      decreaseUncommonItemQuality(item);
+      updateUncommonItemQuality(item);
     }
 
     decreaseSellInDate(item);
@@ -30,25 +30,31 @@ class GildedRose {
     }
   }
 
-  private void decreaseUncommonItemQuality(Item item) {
+  private void updateCommonItemQuality(Item item) {
+    if (item.quality > 0) {
+      item.quality -= 1;
+    }
+  }
+
+  private void updateUncommonItemQuality(Item item) {
     if (item.quality < MAX_QUALITY) {
-      item.quality += 1;
-
       if (isBackstagePass(item)) {
-        if (item.sellIn < 11 && item.quality < MAX_QUALITY) {
-          item.quality += 1;
-        }
-
-        if (item.sellIn < 6 && item.quality < MAX_QUALITY) {
-          item.quality += 1;
-        }
+        updateBackstagePassQuality(item);
+      } else {
+        item.quality += 1;
       }
     }
   }
 
-  private void decreaseCommonItemQuality(Item item) {
-    if (item.quality > 0) {
-      item.quality -= 1;
+  private void updateBackstagePassQuality(Item item) {
+    item.quality += 1;
+
+    if (item.sellIn < 11 && item.quality < MAX_QUALITY) {
+      item.quality += 1;
+    }
+
+    if (item.sellIn < 6 && item.quality < MAX_QUALITY) {
+      item.quality += 1;
     }
   }
 
