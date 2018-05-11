@@ -18,10 +18,9 @@ class GildedRose {
   }
 
   private void updateQuality(Item item) {
-    Function<Integer, Integer> nullifyIfNegative = value -> value < 0 ? 0 : value;
 
     if (isCommon(item)) {
-      item.quality = nullifyIfNegative.apply(decreaseQuality(item.quality));
+      decreaseQuality(item);
     } else {
       if (isBackstagePass(item)) {
         increaseBackStagePassQuality(item);
@@ -31,7 +30,7 @@ class GildedRose {
     }
 
     if (!isSulfuras(item)) {
-      item.sellIn = decreaseSellInDate(item.sellIn);
+      decreaseSellInDate(item);
     }
 
     if (isSellInDatePassed(item)) {
@@ -39,15 +38,22 @@ class GildedRose {
     }
   }
 
+  private void decreaseQuality(Item item) {
+    Function<Integer, Integer> nullifyIfNegative =
+        decreasedQuality -> decreasedQuality < 0 ? 0 : decreasedQuality;
+
+    item.quality = nullifyIfNegative.apply(item.quality - 1);
+  }
+
+  private void decreaseSellInDate(Item item) {
+    item.sellIn -= 1;
+  }
+
   private void increaseQuality(Item item) {
     Function<Integer, Integer> bornAtMaxQuality =
         increasedQuality -> increasedQuality > MAX_QUALITY ? MAX_QUALITY : increasedQuality;
 
     item.quality = bornAtMaxQuality.apply(item.quality + 1);
-  }
-
-  private int decreaseQuality(int itemQuality) {
-    return itemQuality - 1;
   }
 
   private void increaseBackStagePassQuality(Item item) {
@@ -60,10 +66,6 @@ class GildedRose {
     if (item.sellIn < 6) {
       increaseQuality(item);
     }
-  }
-
-  private int decreaseSellInDate(int itemSellIn) {
-    return itemSellIn - 1;
   }
 
   private void updateQualityOfASellInDatePassedItem(Item item) {
