@@ -23,7 +23,11 @@ class GildedRose {
     if (isCommon(item)) {
       item.quality = nullifyIfNegative.apply(decreaseQuality(item.quality));
     } else {
-      increaseQuality(item);
+      if (isBackstagePass(item)) {
+        increaseBackStagePassQuality(item);
+      } else if (!isSulfuras(item)) {
+        increaseQuality(item);
+      }
     }
 
     if (!isSulfuras(item)) {
@@ -35,29 +39,26 @@ class GildedRose {
     }
   }
 
+  private void increaseQuality(Item item) {
+    Function<Integer, Integer> bornAtMaxQuality =
+        increasedQuality -> increasedQuality > MAX_QUALITY ? MAX_QUALITY : increasedQuality;
+
+    item.quality = bornAtMaxQuality.apply(item.quality + 1);
+  }
+
   private int decreaseQuality(int itemQuality) {
     return itemQuality - 1;
   }
 
-  private void increaseQuality(Item item) {
-    if (item.quality < MAX_QUALITY) {
-      if (isBackstagePass(item)) {
-        increaseBackStagePassQuality(item);
-      } else {
-        item.quality += 1;
-      }
-    }
-  }
-
   private void increaseBackStagePassQuality(Item item) {
-    item.quality += 1;
+    increaseQuality(item);
 
-    if (item.sellIn < 11 && item.quality < MAX_QUALITY) {
-      item.quality += 1;
+    if (item.sellIn < 11) {
+      increaseQuality(item);
     }
 
-    if (item.sellIn < 6 && item.quality < MAX_QUALITY) {
-      item.quality += 1;
+    if (item.sellIn < 6) {
+      increaseQuality(item);
     }
   }
 
@@ -66,8 +67,8 @@ class GildedRose {
   }
 
   private void updateQualityOfASellInDatePassedItem(Item item) {
-    if (isAgedBrie(item) && item.quality < MAX_QUALITY) {
-      item.quality += 1;
+    if (isAgedBrie(item)) {
+      increaseQuality(item);
     } else if (isBackstagePass(item)) {
       item.quality = 0;
     } else if (item.quality > 0 && !isSulfuras(item)) {
