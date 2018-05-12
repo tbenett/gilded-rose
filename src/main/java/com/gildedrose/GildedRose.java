@@ -6,84 +6,88 @@ import java.util.function.Predicate;
 
 class GildedRose {
   private static final int MAX_QUALITY = 50;
+  private static final int QUALITY_UPDATE_FACTOR = 1;
   private Item[] items;
 
   GildedRose(Item[] items) {
     this.items = items;
   }
 
-  void updateQuality() {
+  void updateItems() {
     Arrays
         .stream(items)
         .filter(((Predicate<Item>) this::isSulfuras).negate())
-        .forEach(this::updateQuality);
+        .forEach(this::updateItems);
   }
 
-  private void updateQuality(Item item) {
-
-    if (isCommon(item)) {
-      decreaseQuality(item);
+  private void updateItems(Item item) {
+    if (!isExpired(item)) {
+      notExpiredQualityUpdate(item);
     } else {
-      if (isBackstagePass(item)) {
-        increaseBackStagePassQuality(item);
-      } else {
-        increaseQuality(item);
-      }
+      expiredQualityUpdate(item);
+    }
+  }
+
+  private void notExpiredQualityUpdate(Item item) {
+    if (isAgedBrie(item)) {
+      increaseQuality(item, QUALITY_UPDATE_FACTOR);
+    } else if (isBackstagePass(item)) {
+      increaseBackStagePassQuality(item);
+    } else {
+      decreaseQuality(item, QUALITY_UPDATE_FACTOR);
     }
 
     decreaseSellInDate(item);
-
-    if (isSellInDatePassed(item)) {
-      updateQualityOfASellInDatePassedItem(item);
-    }
   }
 
-  private void decreaseQuality(Item item) {
+  private void expiredQualityUpdate(Item item) {
+    if (isAgedBrie(item)) {
+      increaseQuality(item, QUALITY_UPDATE_FACTOR * 2);
+    } else if (isBackstagePass(item)) {
+      nullifyQuality(item);
+    } else {
+      decreaseQuality(item, QUALITY_UPDATE_FACTOR * 2);
+    }
+
+    decreaseSellInDate(item);
+  }
+
+  private void decreaseQuality(Item item, int qualityUpdateFactor) {
     Function<Integer, Integer> nullifyIfNegative =
         decreasedQuality -> decreasedQuality < 0 ? 0 : decreasedQuality;
 
-    item.quality = nullifyIfNegative.apply(item.quality - 1);
+    item.quality = nullifyIfNegative.apply(item.quality - qualityUpdateFactor);
   }
 
   private void decreaseSellInDate(Item item) {
     item.sellIn -= 1;
   }
 
-  private void increaseQuality(Item item) {
+  private void increaseQuality(Item item, int qualityUpdateFactor) {
     Function<Integer, Integer> bornAtMaxQuality =
         increasedQuality -> increasedQuality > MAX_QUALITY ? MAX_QUALITY : increasedQuality;
 
-    item.quality = bornAtMaxQuality.apply(item.quality + 1);
+    item.quality = bornAtMaxQuality.apply(item.quality + qualityUpdateFactor);
   }
 
   private void increaseBackStagePassQuality(Item item) {
-    increaseQuality(item);
+    increaseQuality(item, QUALITY_UPDATE_FACTOR);
 
     if (item.sellIn < 11) {
-      increaseQuality(item);
+      increaseQuality(item, QUALITY_UPDATE_FACTOR);
     }
 
     if (item.sellIn < 6) {
-      increaseQuality(item);
+      increaseQuality(item, QUALITY_UPDATE_FACTOR);
     }
   }
 
-  private void updateQualityOfASellInDatePassedItem(Item item) {
-    if (isAgedBrie(item)) {
-      increaseQuality(item);
-    } else if (isBackstagePass(item)) {
-      item.quality = 0;
-    } else if (item.quality > 0) {
-      item.quality -= 1;
-    }
+  private void nullifyQuality(Item item) {
+    item.quality = 0;
   }
 
-  private boolean isSellInDatePassed(Item item) {
-    return item.sellIn < 0;
-  }
-
-  private boolean isCommon(Item item) {
-    return !isAgedBrie(item) && !isBackstagePass(item);
+  private boolean isExpired(Item item) {
+    return item.sellIn <= 0;
   }
 
   private boolean isSulfuras(Item item) {
