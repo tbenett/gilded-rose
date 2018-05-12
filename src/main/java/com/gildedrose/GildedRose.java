@@ -21,7 +21,7 @@ class GildedRose {
   }
 
   private void updateItems(Item item) {
-    if (!isExpired(item)) {
+    if (isUnexpired(item)) {
       unexpiredQualityUpdate(item);
     } else {
       expiredQualityUpdate(item);
@@ -82,8 +82,8 @@ class GildedRose {
     item.sellIn -= 1;
   }
 
-  private boolean isExpired(Item item) {
-    return item.sellIn <= 0;
+  private boolean isUnexpired(Item item) {
+    return item.sellIn > 0;
   }
 
   private boolean isSulfuras(Item item) {
