@@ -2,6 +2,7 @@ package com.gildedrose;
 
 import java.util.Arrays;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 class GildedRose {
   private static final int MAX_QUALITY = 50;
@@ -14,6 +15,7 @@ class GildedRose {
   void updateQuality() {
     Arrays
         .stream(items)
+        .filter(((Predicate<Item>) this::isSulfuras).negate())
         .forEach(this::updateQuality);
   }
 
@@ -24,14 +26,12 @@ class GildedRose {
     } else {
       if (isBackstagePass(item)) {
         increaseBackStagePassQuality(item);
-      } else if (!isSulfuras(item)) {
+      } else {
         increaseQuality(item);
       }
     }
 
-    if (!isSulfuras(item)) {
-      decreaseSellInDate(item);
-    }
+    decreaseSellInDate(item);
 
     if (isSellInDatePassed(item)) {
       updateQualityOfASellInDatePassedItem(item);
@@ -73,7 +73,7 @@ class GildedRose {
       increaseQuality(item);
     } else if (isBackstagePass(item)) {
       item.quality = 0;
-    } else if (item.quality > 0 && !isSulfuras(item)) {
+    } else if (item.quality > 0) {
       item.quality -= 1;
     }
   }
@@ -83,7 +83,7 @@ class GildedRose {
   }
 
   private boolean isCommon(Item item) {
-    return !isAgedBrie(item) && !isBackstagePass(item) && !isSulfuras(item);
+    return !isAgedBrie(item) && !isBackstagePass(item);
   }
 
   private boolean isSulfuras(Item item) {
