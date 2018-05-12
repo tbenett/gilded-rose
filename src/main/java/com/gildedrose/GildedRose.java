@@ -22,13 +22,15 @@ class GildedRose {
 
   private void updateItems(Item item) {
     if (!isExpired(item)) {
-      notExpiredQualityUpdate(item);
+      unexpiredQualityUpdate(item);
     } else {
       expiredQualityUpdate(item);
     }
+
+    decreaseSellInDate(item);
   }
 
-  private void notExpiredQualityUpdate(Item item) {
+  private void unexpiredQualityUpdate(Item item) {
     if (isAgedBrie(item)) {
       increaseQuality(item, QUALITY_UPDATE_FACTOR);
     } else if (isBackstagePass(item)) {
@@ -36,8 +38,6 @@ class GildedRose {
     } else {
       decreaseQuality(item, QUALITY_UPDATE_FACTOR);
     }
-
-    decreaseSellInDate(item);
   }
 
   private void expiredQualityUpdate(Item item) {
@@ -48,19 +48,6 @@ class GildedRose {
     } else {
       decreaseQuality(item, QUALITY_UPDATE_FACTOR * 2);
     }
-
-    decreaseSellInDate(item);
-  }
-
-  private void decreaseQuality(Item item, int qualityUpdateFactor) {
-    Function<Integer, Integer> nullifyIfNegative =
-        decreasedQuality -> decreasedQuality < 0 ? 0 : decreasedQuality;
-
-    item.quality = nullifyIfNegative.apply(item.quality - qualityUpdateFactor);
-  }
-
-  private void decreaseSellInDate(Item item) {
-    item.sellIn -= 1;
   }
 
   private void increaseQuality(Item item, int qualityUpdateFactor) {
@@ -71,19 +58,28 @@ class GildedRose {
   }
 
   private void increaseBackStagePassQuality(Item item) {
-    increaseQuality(item, QUALITY_UPDATE_FACTOR);
-
-    if (item.sellIn < 11) {
+    if (item.sellIn > 10) {
       increaseQuality(item, QUALITY_UPDATE_FACTOR);
+    } else if (item.sellIn > 5) {
+      increaseQuality(item, QUALITY_UPDATE_FACTOR * 2);
+    } else {
+      increaseQuality(item, QUALITY_UPDATE_FACTOR * 3);
     }
+  }
 
-    if (item.sellIn < 6) {
-      increaseQuality(item, QUALITY_UPDATE_FACTOR);
-    }
+  private void decreaseQuality(Item item, int qualityUpdateFactor) {
+    Function<Integer, Integer> nullifyIfNegative =
+        decreasedQuality -> decreasedQuality < 0 ? 0 : decreasedQuality;
+
+    item.quality = nullifyIfNegative.apply(item.quality - qualityUpdateFactor);
   }
 
   private void nullifyQuality(Item item) {
     item.quality = 0;
+  }
+
+  private void decreaseSellInDate(Item item) {
+    item.sellIn -= 1;
   }
 
   private boolean isExpired(Item item) {
