@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 class GildedRose {
   private static final int MAX_QUALITY = 50;
   private static final int QUALITY_UPDATE_FACTOR = 1;
+  private static final int SELLIN_UPDATE_FACTOR = 1;
   private Item[] items;
 
   GildedRose(Item[] items) {
@@ -79,7 +80,7 @@ class GildedRose {
   }
 
   private void decreaseSellInDate(Item item) {
-    item.sellIn -= 1;
+    item.sellIn -= SELLIN_UPDATE_FACTOR;
   }
 
   private boolean isUnexpired(Item item) {
