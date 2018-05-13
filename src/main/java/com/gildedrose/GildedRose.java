@@ -18,17 +18,18 @@ class GildedRose {
     Arrays
         .stream(items)
         .filter(((Predicate<Item>) this::isSulfuras).negate())
-        .forEach(this::updateItems);
+        .forEach(item -> {
+          updateQuality(item);
+          decreaseSellInDate(item);
+        });
   }
 
-  private void updateItems(Item item) {
+  private void updateQuality(Item item) {
     if (isUnexpired(item)) {
       unexpiredQualityUpdate(item);
     } else {
       expiredQualityUpdate(item);
     }
-
-    decreaseSellInDate(item);
   }
 
   private void unexpiredQualityUpdate(Item item) {
