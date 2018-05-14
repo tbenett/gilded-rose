@@ -12,7 +12,8 @@ class ItemQualityUpdaterTest {
   @Nested
   class increase {
     int maximumQuality = 50;
-    final ItemQualityUpdater qualityUpdater = new ItemQualityUpdater(maximumQuality, defaultUpdateFactor);
+    int minimumQuality = 0;
+    final ItemQualityUpdater qualityUpdater = new ItemQualityUpdater(maximumQuality, minimumQuality, defaultUpdateFactor);
 
     @Nested
     class WhenItemQualityIsUnderMaximumQuality {
@@ -37,6 +38,39 @@ class ItemQualityUpdaterTest {
         qualityUpdater.increase(item);
 
         assertThat(item.quality).isEqualTo(maximumQuality);
+      }
+    }
+  }
+
+  @Nested
+  class decrease {
+    int maximumQuality = 50;
+    int minimumQuality = 0;
+    final ItemQualityUpdater qualityUpdater = new ItemQualityUpdater(maximumQuality, minimumQuality, defaultUpdateFactor);
+
+    @Nested
+    class WhenItemQualityIsAboveMinimumQuality {
+
+      @Test
+      void itDecreasesItemQuality() {
+        final Item item = new Item("a name", 10, 10);
+
+        qualityUpdater.decrease(item);
+
+        assertThat(item.quality).isEqualTo(9);
+      }
+    }
+
+    @Nested
+    class WhenItemQualityIsAtMinimumQuality {
+
+      @Test
+      void itDoesNotIncreaseItemQuality() {
+        final Item item = new Item("a name", 10, minimumQuality);
+
+        qualityUpdater.decrease(item);
+
+        assertThat(item.quality).isEqualTo(minimumQuality);
       }
     }
   }

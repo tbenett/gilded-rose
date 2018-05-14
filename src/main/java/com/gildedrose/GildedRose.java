@@ -8,12 +8,13 @@ class GildedRose {
   private static final int MAX_QUALITY = 50;
   private static final int QUALITY_UPDATE_FACTOR = 1;
   private static final int SELLIN_UPDATE_FACTOR = 1;
+  private static final int MIN_QUALITY = 0;
   private final ItemQualityUpdater qualityUpdater;
   private Item[] items;
 
   GildedRose(Item[] items) {
     this.items = items;
-    this.qualityUpdater = new ItemQualityUpdater(MAX_QUALITY, QUALITY_UPDATE_FACTOR);
+    this.qualityUpdater = new ItemQualityUpdater(MAX_QUALITY, MIN_QUALITY, QUALITY_UPDATE_FACTOR);
   }
 
   void updateItems() {
