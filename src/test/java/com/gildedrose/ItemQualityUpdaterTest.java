@@ -7,10 +7,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ItemQualityUpdaterTest {
 
+  private int defaultUpdateFactor = 1;
+
   @Nested
   class increase {
     int maximumQuality = 50;
-    final ItemQualityUpdater qualityUpdater = new ItemQualityUpdater(maximumQuality);
+    final ItemQualityUpdater qualityUpdater = new ItemQualityUpdater(maximumQuality, defaultUpdateFactor);
 
     @Nested
     class WhenItemQualityIsUnderMaximumQuality {

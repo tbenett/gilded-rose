@@ -13,7 +13,7 @@ class GildedRose {
 
   GildedRose(Item[] items) {
     this.items = items;
-    this.qualityUpdater = new ItemQualityUpdater(MAX_QUALITY);
+    this.qualityUpdater = new ItemQualityUpdater(MAX_QUALITY, QUALITY_UPDATE_FACTOR);
   }
 
   void updateItems() {

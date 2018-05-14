@@ -2,13 +2,15 @@ package com.gildedrose;
 
 class ItemQualityUpdater {
   private final int maximumQuality;
+  private int defaultUpdateFactor;
 
-  ItemQualityUpdater(int maximumQuality) {
+  ItemQualityUpdater(int maximumQuality, int defaultUpdateFactor) {
     this.maximumQuality = maximumQuality;
+    this.defaultUpdateFactor = defaultUpdateFactor;
   }
 
   void increase(Item item) {
-    item.quality = item.quality + 1 > maximumQuality ? item.quality : item.quality + 1;
+    increase(item, defaultUpdateFactor);
   }
 
   void increase(Item item, int qualityUpdateFactor) {
