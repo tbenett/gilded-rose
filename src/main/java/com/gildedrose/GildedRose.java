@@ -6,11 +6,12 @@ import java.util.function.Predicate;
 
 class GildedRose {
   private static final int MAX_QUALITY = 50;
+  private static final int MIN_QUALITY = 0;
   private static final int QUALITY_UPDATE_FACTOR = 1;
   private static final int SELLIN_UPDATE_FACTOR = 1;
-  private static final int MIN_QUALITY = 0;
-  private final ItemQualityUpdater qualityUpdater;
+
   private Item[] items;
+  private final ItemQualityUpdater qualityUpdater;
 
   GildedRose(Item[] items) {
     this.items = items;
