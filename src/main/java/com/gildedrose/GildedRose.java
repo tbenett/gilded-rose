@@ -1,21 +1,15 @@
 package com.gildedrose;
 
 import java.util.Arrays;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 class GildedRose {
-  private static final int MAX_QUALITY = 50;
-  private static final int MIN_QUALITY = 0;
-  private static final int QUALITY_UPDATE_FACTOR = 1;
   private static final int SELLIN_UPDATE_FACTOR = 1;
 
   private Item[] items;
-  private final ItemQualityUpdater qualityUpdater;
 
   GildedRose(Item[] items) {
     this.items = items;
-    this.qualityUpdater = new ItemQualityUpdater(MAX_QUALITY, MIN_QUALITY, QUALITY_UPDATE_FACTOR);
   }
 
   void updateItems() {
@@ -38,31 +32,42 @@ class GildedRose {
 
   private void unexpiredQualityUpdate(Item item) {
     if (isAgedBrie(item)) {
-      qualityUpdater.increase(item, QUALITY_UPDATE_FACTOR);
+      ItemQualityUpdater.defaultIncrease(item);
     } else if (isBackstagePass(item)) {
       increaseBackStagePassQuality(item);
     } else {
-      qualityUpdater.decrease(item, QUALITY_UPDATE_FACTOR);
+      ItemQualityUpdater.defaultDecrease(item);
     }
   }
 
   private void expiredQualityUpdate(Item item) {
     if (isAgedBrie(item)) {
-      qualityUpdater.increase(item, QUALITY_UPDATE_FACTOR * 2);
+      ItemQualityUpdater.increase(
+          item,
+          ItemQualityUpdater.DEFAULT_QUALITY_UPDATE_FACTOR * 2
+      );
     } else if (isBackstagePass(item)) {
       nullifyQuality(item);
     } else {
-      qualityUpdater.decrease(item, QUALITY_UPDATE_FACTOR * 2);
+      ItemQualityUpdater.decrease(
+          item, ItemQualityUpdater.DEFAULT_QUALITY_UPDATE_FACTOR * 2
+      );
     }
   }
 
   private void increaseBackStagePassQuality(Item item) {
     if (item.sellIn > 10) {
-      qualityUpdater.increase(item, QUALITY_UPDATE_FACTOR);
+      ItemQualityUpdater.defaultIncrease(item);
     } else if (item.sellIn > 5) {
-      qualityUpdater.increase(item, QUALITY_UPDATE_FACTOR * 2);
+      ItemQualityUpdater.increase(
+          item,
+          ItemQualityUpdater.DEFAULT_QUALITY_UPDATE_FACTOR * 2
+      );
     } else {
-      qualityUpdater.increase(item, QUALITY_UPDATE_FACTOR * 3);
+      ItemQualityUpdater.increase(
+          item,
+          ItemQualityUpdater.DEFAULT_QUALITY_UPDATE_FACTOR * 3
+      );
     }
   }
 

@@ -1,37 +1,31 @@
 package com.gildedrose;
 
 class ItemQualityUpdater {
-  private final int maximumQuality;
-  private final int minimumQuality;
-  private int defaultUpdateFactor;
+  static final int MIN_QUALITY = 0;
+  static final int MAX_QUALITY = 50;
+  static final int DEFAULT_QUALITY_UPDATE_FACTOR = 1;
 
-  ItemQualityUpdater(int maximumQuality, int minimumQuality, int defaultUpdateFactor) {
-    this.maximumQuality = maximumQuality;
-    this.minimumQuality = minimumQuality;
-    this.defaultUpdateFactor = defaultUpdateFactor;
+  static void defaultIncrease(Item item) {
+    increase(item, DEFAULT_QUALITY_UPDATE_FACTOR);
   }
 
-  void increase(Item item) {
-    increase(item, defaultUpdateFactor);
-  }
-
-  void increase(Item item, int qualityUpdateFactor) {
+  static void increase(Item item, int qualityUpdateFactor) {
     item.quality = bornIncreaseAtMaximumQuality(item.quality + qualityUpdateFactor);
   }
 
-  private int bornIncreaseAtMaximumQuality(int increasedQuality) {
-    return increasedQuality > maximumQuality ? maximumQuality : increasedQuality;
+  static private int bornIncreaseAtMaximumQuality(int increasedQuality) {
+    return increasedQuality > MAX_QUALITY ? MAX_QUALITY : increasedQuality;
   }
 
-  void decrease(Item item) {
-    decrease(item, defaultUpdateFactor);
+  static void defaultDecrease(Item item) {
+    decrease(item, DEFAULT_QUALITY_UPDATE_FACTOR);
   }
 
-  void decrease(Item item, int qualityUpdateFactor) {
+  static void decrease(Item item, int qualityUpdateFactor) {
     item.quality = bornDecreaseAtMinimumQuality(item.quality - qualityUpdateFactor);
   }
 
-  private int bornDecreaseAtMinimumQuality(int decreasedQuality) {
-    return decreasedQuality < minimumQuality ? minimumQuality : decreasedQuality;
+  static private int bornDecreaseAtMinimumQuality(int decreasedQuality) {
+    return decreasedQuality < MIN_QUALITY ? MIN_QUALITY : decreasedQuality;
   }
 }
