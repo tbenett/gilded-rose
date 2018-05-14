@@ -41,7 +41,7 @@ class GildedRose {
     } else if (isBackstagePass(item)) {
       increaseBackStagePassQuality(item);
     } else {
-      decreaseQuality(item, QUALITY_UPDATE_FACTOR);
+      qualityUpdater.decrease(item, QUALITY_UPDATE_FACTOR);
     }
   }
 
@@ -51,7 +51,7 @@ class GildedRose {
     } else if (isBackstagePass(item)) {
       nullifyQuality(item);
     } else {
-      decreaseQuality(item, QUALITY_UPDATE_FACTOR * 2);
+      qualityUpdater.decrease(item, QUALITY_UPDATE_FACTOR * 2);
     }
   }
 
@@ -63,13 +63,6 @@ class GildedRose {
     } else {
       qualityUpdater.increase(item, QUALITY_UPDATE_FACTOR * 3);
     }
-  }
-
-  private void decreaseQuality(Item item, int qualityUpdateFactor) {
-    Function<Integer, Integer> nullifyIfNegative =
-        decreasedQuality -> decreasedQuality < 0 ? 0 : decreasedQuality;
-
-    item.quality = nullifyIfNegative.apply(item.quality - qualityUpdateFactor);
   }
 
   private void nullifyQuality(Item item) {

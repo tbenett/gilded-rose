@@ -1,7 +1,5 @@
 package com.gildedrose;
 
-import java.util.function.Function;
-
 class ItemQualityUpdater {
   private final int maximumQuality;
   private final int minimumQuality;
@@ -25,17 +23,15 @@ class ItemQualityUpdater {
     return increasedQuality > maximumQuality ? maximumQuality : increasedQuality;
   }
 
-
-  public void decrease(Item item) {
+  void decrease(Item item) {
     decrease(item, defaultUpdateFactor);
   }
-
 
   void decrease(Item item, int qualityUpdateFactor) {
     item.quality = bornDecreaseAtMinimumQuality(item.quality - qualityUpdateFactor);
   }
 
   private int bornDecreaseAtMinimumQuality(int decreasedQuality) {
-    return decreasedQuality < 0 ? 0 : decreasedQuality;
+    return decreasedQuality < minimumQuality ? minimumQuality : decreasedQuality;
   }
 }
