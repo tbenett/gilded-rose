@@ -8,10 +8,12 @@ class GildedRose {
   private static final int MAX_QUALITY = 50;
   private static final int QUALITY_UPDATE_FACTOR = 1;
   private static final int SELLIN_UPDATE_FACTOR = 1;
+  private final ItemQualityUpdater qualityUpdater;
   private Item[] items;
 
   GildedRose(Item[] items) {
     this.items = items;
+    this.qualityUpdater = new ItemQualityUpdater(MAX_QUALITY);
   }
 
   void updateItems() {
@@ -34,7 +36,7 @@ class GildedRose {
 
   private void unexpiredQualityUpdate(Item item) {
     if (isAgedBrie(item)) {
-      increaseQuality(item, QUALITY_UPDATE_FACTOR);
+      qualityUpdater.increase(item, QUALITY_UPDATE_FACTOR);
     } else if (isBackstagePass(item)) {
       increaseBackStagePassQuality(item);
     } else {
@@ -44,7 +46,7 @@ class GildedRose {
 
   private void expiredQualityUpdate(Item item) {
     if (isAgedBrie(item)) {
-      increaseQuality(item, QUALITY_UPDATE_FACTOR * 2);
+      qualityUpdater.increase(item, QUALITY_UPDATE_FACTOR * 2);
     } else if (isBackstagePass(item)) {
       nullifyQuality(item);
     } else {
@@ -52,20 +54,13 @@ class GildedRose {
     }
   }
 
-  private void increaseQuality(Item item, int qualityUpdateFactor) {
-    Function<Integer, Integer> bornAtMaxQuality =
-        increasedQuality -> increasedQuality > MAX_QUALITY ? MAX_QUALITY : increasedQuality;
-
-    item.quality = bornAtMaxQuality.apply(item.quality + qualityUpdateFactor);
-  }
-
   private void increaseBackStagePassQuality(Item item) {
     if (item.sellIn > 10) {
-      increaseQuality(item, QUALITY_UPDATE_FACTOR);
+      qualityUpdater.increase(item, QUALITY_UPDATE_FACTOR);
     } else if (item.sellIn > 5) {
-      increaseQuality(item, QUALITY_UPDATE_FACTOR * 2);
+      qualityUpdater.increase(item, QUALITY_UPDATE_FACTOR * 2);
     } else {
-      increaseQuality(item, QUALITY_UPDATE_FACTOR * 3);
+      qualityUpdater.increase(item, QUALITY_UPDATE_FACTOR * 3);
     }
   }
 
