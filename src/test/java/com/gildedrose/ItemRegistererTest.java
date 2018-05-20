@@ -31,6 +31,17 @@ class ItemRegistererTest {
         .withQuality(10)
         .register();
 
-    assertThat(sulfurasItem).isInstanceOf(Sulfuras.class);
+    assertThat(sulfurasItem).isInstanceOf(SulfurasItem.class);
+  }
+
+  @Test
+  void itRegistersAgedBrieItem() {
+    final Item agedBrieItem = anItem()
+        .withName("Aged Brie")
+        .withSellIn(10)
+        .withQuality(10)
+        .register();
+
+    assertThat(agedBrieItem).isInstanceOf(AgedBrieItem.class);
   }
 }

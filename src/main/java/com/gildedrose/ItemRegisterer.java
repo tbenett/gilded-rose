@@ -33,9 +33,15 @@ class ItemRegisterer {
     return name.equals("Sulfuras, Hand of Ragnaros");
   }
 
+  private boolean isAgedBrie() {
+    return name.equals("Aged Brie");
+  }
+
   Item register() {
     if (isSulfuras()) {
-      return new Sulfuras(name, sellIn, quality);
+      return new SulfurasItem(name, sellIn, quality);
+    } else if (isAgedBrie()) {
+      return new AgedBrieItem(name, sellIn, quality);
     }
     return new Item(name, sellIn, quality);
   }
