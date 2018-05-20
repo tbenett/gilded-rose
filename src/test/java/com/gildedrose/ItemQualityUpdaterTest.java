@@ -3,6 +3,7 @@ package com.gildedrose;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import static com.gildedrose.ItemRegisterer.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ItemQualityUpdaterTest {
@@ -14,7 +15,7 @@ class ItemQualityUpdaterTest {
 
       @Test
       void itIncreasesItemQuality() {
-        final Item item = new Item("a name", 10, 10);
+        final Item item = anItem().withName("a name").withSellIn(10).withQuality(10).register();
 
         ItemQualityUpdater.defaultIncrease(item);
 
@@ -28,9 +29,7 @@ class ItemQualityUpdaterTest {
 
       @Test
       void itDoesNotIncreaseItemQuality() {
-        final Item item = new Item(
-            "a name", 10, ItemQualityUpdater.MAX_QUALITY
-        );
+        final Item item = anItem().withName("a name").withSellIn(10).withQuality(ItemQualityUpdater.MAX_QUALITY).register();
 
         ItemQualityUpdater.defaultIncrease(item);
 
@@ -47,7 +46,7 @@ class ItemQualityUpdaterTest {
 
       @Test
       void itDecreasesItemQuality() {
-        final Item item = new Item("a name", 10, 10);
+        final Item item = anItem().withName("a name").withSellIn(10).withQuality(10).register();
 
         ItemQualityUpdater.defaultDecrease(item);
 
@@ -60,9 +59,7 @@ class ItemQualityUpdaterTest {
 
       @Test
       void itDoesNotIncreaseItemQuality() {
-        final Item item = new Item(
-            "a name", 10, ItemQualityUpdater.MIN_QUALITY
-        );
+        final Item item = anItem().withName("a name").withSellIn(10).withQuality(ItemQualityUpdater.MIN_QUALITY).register();
 
         ItemQualityUpdater.defaultDecrease(item);
 

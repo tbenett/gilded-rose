@@ -2,11 +2,17 @@ package com.gildedrose;
 
 import java.util.Objects;
 
+import static com.gildedrose.ItemRegisterer.anItem;
+
 public class CommonItem {
   private final Item item;
 
   private CommonItem(String itemName, int sellIn, int quality) {
-    this.item = new Item(itemName, sellIn, quality);
+    this.item = anItem()
+        .withName(itemName)
+        .withSellIn(sellIn)
+        .withQuality(quality)
+        .register();
   }
 
   static CommonItem of(String itemName, int sellIn, int quality) {
