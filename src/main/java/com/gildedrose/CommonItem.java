@@ -13,6 +13,12 @@ public class CommonItem {
     return new CommonItem(itemName, sellIn, quality);
   }
 
+
+  public void updateQuality() {
+    item.quality -= 2;
+  }
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -26,5 +32,14 @@ public class CommonItem {
   public int hashCode() {
 
     return Objects.hash(item);
+  }
+
+  @Override
+  public String toString() {
+    return "CommonItem{" +
+        "item.name=\"" + item.name + "\" " +
+        "item.sellIn=" + item.sellIn + " "+
+        "item.quality=" + item.quality +
+        '}';
   }
 }
