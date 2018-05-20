@@ -9,15 +9,13 @@ public class CommonItem {
     this.item = new Item(itemName, sellIn, quality);
   }
 
-  public static CommonItem of(String itemName, int sellIn, int quality) {
+  static CommonItem of(String itemName, int sellIn, int quality) {
     return new CommonItem(itemName, sellIn, quality);
   }
 
-
-  public void updateQuality() {
-    item.quality -= 2;
+  void updateQuality() {
+    item.quality -= item.sellIn > 0 ? 1 : 2;
   }
-
 
   @Override
   public boolean equals(Object o) {
@@ -36,10 +34,6 @@ public class CommonItem {
 
   @Override
   public String toString() {
-    return "CommonItem{" +
-        "item.name=\"" + item.name + "\" " +
-        "item.sellIn=" + item.sellIn + " "+
-        "item.quality=" + item.quality +
-        '}';
+      return item.toString();
   }
 }
