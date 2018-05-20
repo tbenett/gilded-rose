@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import java.util.Objects;
+
 public class CommonItem {
   private final Item item;
 
@@ -9,5 +11,20 @@ public class CommonItem {
 
   public static CommonItem of(String itemName, int sellIn, int quality) {
     return new CommonItem(itemName, sellIn, quality);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    CommonItem that = (CommonItem) o;
+    return item.name.equals(that.item.name)
+        && item.sellIn == that.item.sellIn
+        && item.quality == that.item.quality; }
+
+  @Override
+  public int hashCode() {
+
+    return Objects.hash(item);
   }
 }
