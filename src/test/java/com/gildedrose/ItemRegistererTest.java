@@ -22,4 +22,15 @@ class ItemRegistererTest {
     assertThat(item.sellIn).isEqualTo(itemSellIn);
     assertThat(item.quality).isEqualTo(itemQuality);
   }
+
+  @Test
+  void itRegistersSulfurasItem() {
+    final Item sulfurasItem = anItem()
+        .withName("Sulfuras, Hand of Ragnaros")
+        .withSellIn(10)
+        .withQuality(10)
+        .register();
+
+    assertThat(sulfurasItem).isInstanceOf(Sulfuras.class);
+  }
 }

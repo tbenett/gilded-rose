@@ -29,7 +29,14 @@ class ItemRegisterer {
     return this;
   }
 
+  private boolean isSulfuras() {
+    return name.equals("Sulfuras, Hand of Ragnaros");
+  }
+
   Item register() {
+    if (isSulfuras()) {
+      return new Sulfuras(name, sellIn, quality);
+    }
     return new Item(name, sellIn, quality);
   }
 }
