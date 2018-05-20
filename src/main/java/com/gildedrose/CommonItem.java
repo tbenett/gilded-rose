@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import static com.gildedrose.ItemRegisterer.anItem;
 
-public class CommonItem {
+class CommonItem {
   private final Item item;
 
   private CommonItem(String itemName, int sellIn, int quality) {

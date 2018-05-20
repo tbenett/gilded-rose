@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-public class ItemRegisterer {
+class ItemRegisterer {
   private String name;
   private int sellIn;
   private int quality;

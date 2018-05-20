@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 class GildedRose {
   private static final int SELLIN_UPDATE_FACTOR = 1;
 
-  private Item[] items;
+  private final Item[] items;
 
   GildedRose(Item[] items) {
     this.items = items;
