@@ -8,8 +8,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CommonItemTest {
 
   @Test
-  void itCreatesACommonItem() {
-    assertThat(CommonItem.of("common name", 10, 10)).isInstanceOf(CommonItem.class);
+  void itCreatesAnItem() {
+    assertThat(CommonItem.of("common name", 10, 10)).isInstanceOf(Item.class);
   }
 
   @Nested
