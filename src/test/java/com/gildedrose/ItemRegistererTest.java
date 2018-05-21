@@ -24,6 +24,17 @@ class ItemRegistererTest {
   }
 
   @Test
+  void itRegistersCommonItem() {
+    final Item commonItem = anItem()
+        .withName("Hand of Ragnaros")
+        .withSellIn(10)
+        .withQuality(10)
+        .register();
+
+    assertThat(commonItem).isInstanceOf(CommonItem.class);
+  }
+
+  @Test
   void itRegistersSulfurasItem() {
     final Item sulfurasItem = anItem()
         .withName("Sulfuras, Hand of Ragnaros")

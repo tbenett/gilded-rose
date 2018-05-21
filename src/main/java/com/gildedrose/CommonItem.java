@@ -4,15 +4,10 @@ import java.util.Objects;
 
 import static com.gildedrose.ItemRegisterer.anItem;
 
-class CommonItem {
-  private final Item item;
+class CommonItem extends Item {
 
-  private CommonItem(String itemName, int sellIn, int quality) {
-    this.item = anItem()
-        .withName(itemName)
-        .withSellIn(sellIn)
-        .withQuality(quality)
-        .register();
+  private CommonItem(String name, int sellIn, int quality) {
+    super(name, sellIn, quality);
   }
 
   static CommonItem of(String itemName, int sellIn, int quality) {
@@ -20,7 +15,7 @@ class CommonItem {
   }
 
   void updateQuality() {
-    item.quality -= item.sellIn > 0 ? 1 : 2;
+    quality -= sellIn > 0 ? 1 : 2;
   }
 
   @Override
@@ -28,18 +23,13 @@ class CommonItem {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     CommonItem that = (CommonItem) o;
-    return item.name.equals(that.item.name)
-        && item.sellIn == that.item.sellIn
-        && item.quality == that.item.quality; }
-
-  @Override
-  public int hashCode() {
-
-    return Objects.hash(item);
+    return name.equals(that.name)
+        && sellIn == that.sellIn
+        && quality == that.quality;
   }
 
   @Override
-  public String toString() {
-      return item.toString();
+  public int hashCode() {
+    return Objects.hash(this);
   }
 }

@@ -49,6 +49,7 @@ class ItemRegisterer {
     } else if (isBackstagePass()) {
       return new BackstagePassItem(name, sellIn, quality);
     }
-    return new Item(name, sellIn, quality);
+
+    return CommonItem.of(name, sellIn, quality);
   }
 }
