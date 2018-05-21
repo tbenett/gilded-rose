@@ -2,8 +2,6 @@ package com.gildedrose;
 
 import java.util.Objects;
 
-import static com.gildedrose.ItemRegisterer.anItem;
-
 class CommonItem extends Item {
 
   private CommonItem(String name, int sellIn, int quality) {
@@ -15,8 +13,28 @@ class CommonItem extends Item {
   }
 
   void updateQuality() {
-    quality -= sellIn > 0 ? 1 : 2;
+    if (isUnexpired()) {
+      unexpiredQualityUpdate();
+    } else {
+      expiredQualityUpdate();
+    }
   }
+
+  private void expiredQualityUpdate() {
+    ItemQualityUpdater.decrease(
+        this,
+        ItemQualityUpdater.DEFAULT_QUALITY_UPDATE_FACTOR * 2
+    );
+  }
+
+  private void unexpiredQualityUpdate() {
+    ItemQualityUpdater.defaultDecrease(this);
+  }
+
+  private boolean isUnexpired() {
+    return sellIn > 0;
+  }
+
 
   @Override
   public boolean equals(Object o) {

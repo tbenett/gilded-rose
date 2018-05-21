@@ -36,7 +36,7 @@ class GildedRose {
     } else if (isBackstagePass(item)) {
       increaseBackStagePassQuality(item);
     } else {
-      ItemQualityUpdater.defaultDecrease(item);
+      ((CommonItem) item).updateQuality();
     }
   }
 
@@ -49,9 +49,7 @@ class GildedRose {
     } else if (isBackstagePass(item)) {
       nullifyQuality(item);
     } else {
-      ItemQualityUpdater.decrease(
-          item, ItemQualityUpdater.DEFAULT_QUALITY_UPDATE_FACTOR * 2
-      );
+      ((CommonItem) item).updateQuality();
     }
   }
 
