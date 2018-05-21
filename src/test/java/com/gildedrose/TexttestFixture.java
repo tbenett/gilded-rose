@@ -1,19 +1,21 @@
 package com.gildedrose;
 
+import static com.gildedrose.ItemRegisterer.*;
+
 class TexttestFixture {
   public static void main(String[] args) {
 
     Item[] items = new Item[]{
-        new Item("+5 Dexterity Vest", 10, 20), //
-        new Item("Aged Brie", 2, 0), //
-        new Item("Elixir of the Mongoose", 5, 7), //
-        new Item("Sulfuras, Hand of Ragnaros", 0, 80), //
-        new Item("Sulfuras, Hand of Ragnaros", -1, 80),
-        new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
-        new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49),
-        new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
+        anItem().withName("+5 Dexterity Vest").withSellIn(10).withQuality(20).register(),
+        anItem().withName("Aged Brie").withSellIn(2).withQuality(0).register(),
+        anItem().withName("Elixir of the Mongoose").withSellIn(5).withQuality(7).register(), //
+        anItem().withName("Sulfuras, Hand of Ragnaros").withSellIn(0).withQuality(80).register(), //
+        anItem().withName("Sulfuras, Hand of Ragnaros").withSellIn(-1).withQuality(80).register(),
+        anItem().withName("Backstage passes to a TAFKAL80ETC concert").withSellIn(15).withQuality(20).register(),
+        anItem().withName("Backstage passes to a TAFKAL80ETC concert").withSellIn(10).withQuality(49).register(),
+        anItem().withName("Backstage passes to a TAFKAL80ETC concert").withSellIn(5).withQuality(49).register(),
         // this conjured item does not work properly yet
-        new Item("Conjured Mana Cake", 3, 6)};
+        anItem().withName("Conjured Mana Cake").withSellIn(3).withQuality(6).register()};
 
     GildedRose app = new GildedRose(items);
 

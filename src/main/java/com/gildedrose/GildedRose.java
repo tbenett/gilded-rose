@@ -1,14 +1,12 @@
 package com.gildedrose;
 
 import java.util.Arrays;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 class GildedRose {
-  private static final int MAX_QUALITY = 50;
-  private static final int QUALITY_UPDATE_FACTOR = 1;
   private static final int SELLIN_UPDATE_FACTOR = 1;
-  private Item[] items;
+
+  private final Item[] items;
 
   GildedRose(Item[] items) {
     this.items = items;
@@ -34,46 +32,41 @@ class GildedRose {
 
   private void unexpiredQualityUpdate(Item item) {
     if (isAgedBrie(item)) {
-      increaseQuality(item, QUALITY_UPDATE_FACTOR);
+      ItemQualityUpdater.defaultIncrease(item);
     } else if (isBackstagePass(item)) {
       increaseBackStagePassQuality(item);
     } else {
-      decreaseQuality(item, QUALITY_UPDATE_FACTOR);
+      ((CommonItem) item).updateQuality();
     }
   }
 
   private void expiredQualityUpdate(Item item) {
     if (isAgedBrie(item)) {
-      increaseQuality(item, QUALITY_UPDATE_FACTOR * 2);
+      ItemQualityUpdater.increase(
+          item,
+          ItemQualityUpdater.DEFAULT_QUALITY_UPDATE_FACTOR * 2
+      );
     } else if (isBackstagePass(item)) {
       nullifyQuality(item);
     } else {
-      decreaseQuality(item, QUALITY_UPDATE_FACTOR * 2);
+      ((CommonItem) item).updateQuality();
     }
-  }
-
-  private void increaseQuality(Item item, int qualityUpdateFactor) {
-    Function<Integer, Integer> bornAtMaxQuality =
-        increasedQuality -> increasedQuality > MAX_QUALITY ? MAX_QUALITY : increasedQuality;
-
-    item.quality = bornAtMaxQuality.apply(item.quality + qualityUpdateFactor);
   }
 
   private void increaseBackStagePassQuality(Item item) {
     if (item.sellIn > 10) {
-      increaseQuality(item, QUALITY_UPDATE_FACTOR);
+      ItemQualityUpdater.defaultIncrease(item);
     } else if (item.sellIn > 5) {
-      increaseQuality(item, QUALITY_UPDATE_FACTOR * 2);
+      ItemQualityUpdater.increase(
+          item,
+          ItemQualityUpdater.DEFAULT_QUALITY_UPDATE_FACTOR * 2
+      );
     } else {
-      increaseQuality(item, QUALITY_UPDATE_FACTOR * 3);
+      ItemQualityUpdater.increase(
+          item,
+          ItemQualityUpdater.DEFAULT_QUALITY_UPDATE_FACTOR * 3
+      );
     }
-  }
-
-  private void decreaseQuality(Item item, int qualityUpdateFactor) {
-    Function<Integer, Integer> nullifyIfNegative =
-        decreasedQuality -> decreasedQuality < 0 ? 0 : decreasedQuality;
-
-    item.quality = nullifyIfNegative.apply(item.quality - qualityUpdateFactor);
   }
 
   private void nullifyQuality(Item item) {
