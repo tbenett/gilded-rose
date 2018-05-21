@@ -37,11 +37,17 @@ class ItemRegisterer {
     return name.equals("Aged Brie");
   }
 
+  private boolean isBackstagePass() {
+    return name.equals("Backstage passes to a TAFKAL80ETC concert");
+  }
+
   Item register() {
     if (isSulfuras()) {
       return new SulfurasItem(name, sellIn, quality);
     } else if (isAgedBrie()) {
       return new AgedBrieItem(name, sellIn, quality);
+    } else if (isBackstagePass()) {
+      return new BackstagePassItem(name, sellIn, quality);
     }
     return new Item(name, sellIn, quality);
   }

@@ -44,4 +44,15 @@ class ItemRegistererTest {
 
     assertThat(agedBrieItem).isInstanceOf(AgedBrieItem.class);
   }
+
+  @Test
+  void itRegistersBackstagePassItem() {
+    final Item backstagePass = anItem()
+        .withName("Backstage passes to a TAFKAL80ETC concert")
+        .withSellIn(10)
+        .withQuality(10)
+        .register();
+
+    assertThat(backstagePass).isInstanceOf(BackstagePassItem.class);
+  }
 }
