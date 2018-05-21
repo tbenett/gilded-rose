@@ -41,7 +41,7 @@ class ItemRegisterer {
     return name.equals("Backstage passes to a TAFKAL80ETC concert");
   }
 
-  Item register() {
+  ItemWrapper register() {
     if (isSulfuras()) {
       return new SulfurasItem(name, sellIn, quality);
     } else if (isAgedBrie()) {

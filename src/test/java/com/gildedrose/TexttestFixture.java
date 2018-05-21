@@ -5,7 +5,7 @@ import static com.gildedrose.ItemRegisterer.*;
 class TexttestFixture {
   public static void main(String[] args) {
 
-    Item[] items = new Item[]{
+    ItemWrapper[] items = new ItemWrapper[]{
         anItem().withName("+5 Dexterity Vest").withSellIn(10).withQuality(20).register(),
         anItem().withName("Aged Brie").withSellIn(2).withQuality(0).register(),
         anItem().withName("Elixir of the Mongoose").withSellIn(5).withQuality(7).register(), //

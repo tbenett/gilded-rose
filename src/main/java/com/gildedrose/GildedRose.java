@@ -6,23 +6,23 @@ import java.util.function.Predicate;
 class GildedRose {
   private static final int SELLIN_UPDATE_FACTOR = 1;
 
-  private final Item[] items;
+  private final ItemWrapper[] items;
 
-  GildedRose(Item[] items) {
+  GildedRose(ItemWrapper[] items) {
     this.items = items;
   }
 
   void updateItems() {
     Arrays
         .stream(items)
-        .filter(((Predicate<Item>) this::isSulfuras).negate())
+        .filter(((Predicate<ItemWrapper>) this::isSulfuras).negate())
         .forEach(item -> {
           updateQuality(item);
           decreaseSellInDate(item);
         });
   }
 
-  private void updateQuality(Item item) {
+  private void updateQuality(ItemWrapper item) {
     if (isUnexpired(item)) {
       unexpiredQualityUpdate(item);
     } else {
@@ -30,17 +30,17 @@ class GildedRose {
     }
   }
 
-  private void unexpiredQualityUpdate(Item item) {
+  private void unexpiredQualityUpdate(ItemWrapper item) {
     if (isAgedBrie(item)) {
       ItemQualityUpdater.defaultIncrease(item);
     } else if (isBackstagePass(item)) {
       increaseBackStagePassQuality(item);
     } else {
-      ((CommonItem) item).updateQuality();
+      item.updateQuality();
     }
   }
 
-  private void expiredQualityUpdate(Item item) {
+  private void expiredQualityUpdate(ItemWrapper item) {
     if (isAgedBrie(item)) {
       ItemQualityUpdater.increase(
           item,
@@ -49,7 +49,7 @@ class GildedRose {
     } else if (isBackstagePass(item)) {
       nullifyQuality(item);
     } else {
-      ((CommonItem) item).updateQuality();
+      item.updateQuality();
     }
   }
 
