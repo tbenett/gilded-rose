@@ -7,18 +7,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class AgedBrieItemTest {
 
-  @Test
-  void itCreatesAnItem() {
-    assertThat(new AgedBrieItem("AgedBrie", 10, 10)).isInstanceOf(ItemWrapper.class);
-  }
-
   @Nested
   class isEqualTo {
 
     @Test
     void twoCommonItemAreEqualIfTheirItemQualitySellInAndQualityAreEqual() {
-      assertThat(new AgedBrieItem("AgedBrie", 10, 10))
-          .isEqualTo(new AgedBrieItem("AgedBrie", 10, 10));
+      assertThat(ItemWrapper.ofAgedBrie("AgedBrie", 10, 10))
+          .isEqualTo(ItemWrapper.ofAgedBrie("AgedBrie", 10, 10));
     }
   }
 
@@ -30,11 +25,11 @@ class AgedBrieItemTest {
 
       @Test
       void itDecreasesQualityByAFactorOfTwo() {
-        final ItemWrapper agedBrieItem = new AgedBrieItem("AgedBrie", 0, 10);
+        final ItemWrapper agedBrieItem = ItemWrapper.ofAgedBrie("AgedBrie", 0, 10);
 
         agedBrieItem.updateQuality();
 
-        assertThat(agedBrieItem).isEqualTo(new AgedBrieItem("AgedBrie", 0, 12));
+        assertThat(agedBrieItem).isEqualTo(ItemWrapper.ofAgedBrie("AgedBrie", 0, 12));
       }
     }
 
@@ -43,11 +38,11 @@ class AgedBrieItemTest {
 
       @Test
       void itDecreasesQualityByAFactorOfOne() {
-        final ItemWrapper agedBrieItem = new AgedBrieItem("AgedBrie", 10, 10);
+        final ItemWrapper agedBrieItem = ItemWrapper.ofAgedBrie("AgedBrie", 10, 10);
 
         agedBrieItem.updateQuality();
 
-        assertThat(agedBrieItem).isEqualTo(new AgedBrieItem("AgedBrie", 10, 11));
+        assertThat(agedBrieItem).isEqualTo(ItemWrapper.ofAgedBrie("AgedBrie", 10, 11));
       }
     }
   }

@@ -16,6 +16,10 @@ abstract class ItemWrapper extends Item {
     return new CommonItem(name, sellIn, quality);
   }
 
+  public static ItemWrapper ofAgedBrie(String name, int sellIn, int quality) {
+    return new AgedBrieItem(name, sellIn, quality);
+  }
+
   void updateQuality() {}
 
   protected boolean isUnexpired() {
