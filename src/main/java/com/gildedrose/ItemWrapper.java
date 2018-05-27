@@ -8,6 +8,10 @@ abstract class ItemWrapper extends Item {
     super(name, sellIn, quality);
   }
 
+  static ItemWrapper ofSulfuras(String name, int sellIn, int quality) {
+    return new SulfurasItem(name, sellIn, quality);
+  }
+
   void updateQuality() {}
 
   protected boolean isUnexpired() {

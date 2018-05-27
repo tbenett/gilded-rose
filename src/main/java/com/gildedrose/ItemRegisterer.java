@@ -43,7 +43,7 @@ class ItemRegisterer {
 
   ItemWrapper register() {
     if (isSulfuras()) {
-      return new SulfurasItem(name, sellIn, quality);
+      return ItemWrapper.ofSulfuras(name, sellIn, quality);
     } else if (isAgedBrie()) {
       return new AgedBrieItem(name, sellIn, quality);
     } else if (isBackstagePass()) {
