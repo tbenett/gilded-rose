@@ -50,6 +50,6 @@ class ItemRegisterer {
       return new BackstagePassItem(name, sellIn, quality);
     }
 
-    return CommonItem.of(name, sellIn, quality);
+    return ItemWrapper.ofCommon(name, sellIn, quality);
   }
 }

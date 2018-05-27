@@ -7,18 +7,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CommonItemTest {
 
-  @Test
-  void itCreatesAnItem() {
-    assertThat(CommonItem.of("common name", 10, 10)).isInstanceOf(Item.class);
-  }
-
   @Nested
   class isEqualTo {
 
     @Test
     void twoCommonItemAreEqualIfTheirItemQualitySellInAndQualityAreEqual() {
-      assertThat(CommonItem.of("common name", 10, 10))
-          .isEqualTo(CommonItem.of("common name", 10, 10));
+      assertThat(ItemWrapper.ofCommon("common name", 10, 10))
+          .isEqualTo(ItemWrapper.ofCommon("common name", 10, 10));
     }
   }
 
@@ -30,11 +25,11 @@ class CommonItemTest {
 
       @Test
       void itDecreasesQualityByAFactorOfTwo() {
-        final CommonItem commonItem = CommonItem.of("common name", 0, 10);
+        final ItemWrapper commonItem = ItemWrapper.ofCommon("common name", 0, 10);
 
         commonItem.updateQuality();
 
-        assertThat(commonItem).isEqualTo(CommonItem.of("common name", 0, 8));
+        assertThat(commonItem).isEqualTo(ItemWrapper.ofCommon("common name", 0, 8));
       }
     }
 
@@ -43,11 +38,11 @@ class CommonItemTest {
 
       @Test
       void itDecreasesQualityByAFactorOfOne() {
-        final CommonItem commonItem = CommonItem.of("common name", 10, 10);
+        final ItemWrapper commonItem = ItemWrapper.ofCommon("common name", 10, 10);
 
         commonItem.updateQuality();
 
-        assertThat(commonItem).isEqualTo(CommonItem.of("common name", 10, 9));
+        assertThat(commonItem).isEqualTo(ItemWrapper.ofCommon("common name", 10, 9));
       }
     }
   }

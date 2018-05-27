@@ -2,12 +2,8 @@ package com.gildedrose;
 
 class CommonItem extends ItemWrapper {
 
-  private CommonItem(String name, int sellIn, int quality) {
+  protected CommonItem(String name, int sellIn, int quality) {
     super(name, sellIn, quality);
-  }
-
-  static CommonItem of(String itemName, int sellIn, int quality) {
-    return new CommonItem(itemName, sellIn, quality);
   }
 
   void updateQuality() {

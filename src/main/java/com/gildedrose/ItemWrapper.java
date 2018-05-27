@@ -12,6 +12,10 @@ abstract class ItemWrapper extends Item {
     return new SulfurasItem(name, sellIn, quality);
   }
 
+  public static ItemWrapper ofCommon(String name, int sellIn, int quality) {
+    return new CommonItem(name, sellIn, quality);
+  }
+
   void updateQuality() {}
 
   protected boolean isUnexpired() {
