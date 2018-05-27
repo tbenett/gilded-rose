@@ -18,7 +18,7 @@ abstract class ItemWrapper extends Item {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    CommonItem that = (CommonItem) o;
+    ItemWrapper that = (ItemWrapper) o;
     return name.equals(that.name)
         && sellIn == that.sellIn
         && quality == that.quality;

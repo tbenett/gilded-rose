@@ -32,7 +32,7 @@ class GildedRose {
 
   private void unexpiredQualityUpdate(ItemWrapper item) {
     if (isAgedBrie(item)) {
-      ItemQualityUpdater.defaultIncrease(item);
+      item.updateQuality();
     } else if (isBackstagePass(item)) {
       increaseBackStagePassQuality(item);
     } else {
@@ -42,10 +42,7 @@ class GildedRose {
 
   private void expiredQualityUpdate(ItemWrapper item) {
     if (isAgedBrie(item)) {
-      ItemQualityUpdater.increase(
-          item,
-          ItemQualityUpdater.DEFAULT_QUALITY_UPDATE_FACTOR * 2
-      );
+      item.updateQuality();
     } else if (isBackstagePass(item)) {
       nullifyQuality(item);
     } else {
